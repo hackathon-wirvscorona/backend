@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const User = require('../models/User');
+const GiftCard = require('../models/GiftCard');
 var sequelize = require('sequelize');
 const verify = require('./verifyToken');
 
@@ -42,7 +43,7 @@ router.post('/account/change', verify, async(req, res) =>{
  * list with all past purchase the user completed
  */
 router.get('/purchases', verify, async(req, res) => {
-    var user = User.findAll({
+    var userlist = User.findAll({
         where: {
             name: req.name
         }
@@ -52,6 +53,12 @@ router.get('/purchases', verify, async(req, res) => {
         res.status(404);
     }
 
-    var list = user.purchases;
-    res.status(200).send(JSON.stringify(list));
+    var user = userlist[0];
+    
+    var giftcards = GiftCard.findAll({
+        where:{
+            userFk: user.id
+        }
+    });
+    res.status(200).json(giftcards);
 });
