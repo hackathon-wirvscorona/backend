@@ -29,7 +29,7 @@ router.post('/', verify, async(req, res) => {
         res.status(400).send("Illegal price for this offer.");
     }
 
-    await Offer.update({ count =  count - 1}, {
+    await Offer.update({ count:  count - 1}, {
         where: {
             id: offer.id
         }
@@ -46,3 +46,6 @@ router.post('/', verify, async(req, res) => {
 
     
 });
+
+module.exports = router;
+

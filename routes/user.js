@@ -27,7 +27,7 @@ router.post('/account/change', verify, async(req, res) =>{
         res.status(404);
     }
 
-    await User.update({email = req.email},  {
+    await User.update({email: req.email},  {
         where: {
             name: req.name
         }
@@ -62,3 +62,5 @@ router.get('/purchases', verify, async(req, res) => {
     });
     res.status(200).json(giftcards);
 });
+
+module.exports = router;
