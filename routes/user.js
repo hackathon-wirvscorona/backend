@@ -3,6 +3,17 @@ const User = require('../models/User');
 var sequelize = require('sequelize');
 const verify = require('./verifyToken');
 
+
+/** list all users
+*/
+
+router.post('/users', verify, async(req, res) => {
+    verify.auth(req, res, function(req, res){
+        var users = User.findAll();
+        res.status(200).json(users);
+    });
+});
+
 /**
  * change account settings
  */
