@@ -1,0 +1,17 @@
+const express = require('express');
+const app = express();
+
+//IMPORT ROUTES
+const authRoute = require('./routes/auth');
+const testRoute = require('./routes/test');
+
+//MIDDLEWARE
+app.use(express.json());
+
+//ROUTEMIDDELWARE
+app.use('/api/test', testRoute);
+app.use('/api/auth', authRoute);
+
+
+
+app.listen(5000, () => console.log("Server is up and running on Port 5000"));
