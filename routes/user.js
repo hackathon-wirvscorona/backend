@@ -9,7 +9,7 @@ const verify = require('./verifyToken');
  * list all users
 */
 
-router.post('/users', verify, async(req, res, next) => {
+router.get('/users', verify, async(req, res, next) => {
     var users = User.findAll();
     res.status(200).json(users);
 });
@@ -28,7 +28,7 @@ router.post('/account/change', verify, async(req, res) =>{
         res.status(404);
     }
 
-    await User.update({email = req.body.email},  {
+    await User.update({email: req.body.email},  {
         where: {
             name: req.body.name
         }
