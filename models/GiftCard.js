@@ -29,5 +29,5 @@ const GiftCard = db.define('giftcard', {
     },
 })
 
+
 module.exports = GiftCard;
-Giftcard.belongsTo(Company, {foreignKey: 'companyFk', targetKey:'id'});

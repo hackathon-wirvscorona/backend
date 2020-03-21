@@ -31,6 +31,8 @@ const Company  = db.define('company', {
 })
 
 
+
 Company.hasMany(GiftCard, {foreignKey: 'companyFk', targetKey:'id'});
+
 module.exports = Company;
 
