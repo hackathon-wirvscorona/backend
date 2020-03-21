@@ -40,5 +40,7 @@ const Address  = db.define('company', {
 
 })
 
+
+
 module.exports = Address;
 
