@@ -1,3 +1,4 @@
+const GiftCard = require('./GiftCard')
 const Sequelize = require('sequelize');
 const db = require('../config/database');
 
@@ -23,5 +24,5 @@ const User = db.define('user', {
     },
 })
 
-User.hasMany(Giftcard, {foreignKey: 'userFk', targetKey:'id'});
+User.hasMany(GiftCard, {foreignKey: 'userFk', targetKey:'id'});
 module.exports = User;
