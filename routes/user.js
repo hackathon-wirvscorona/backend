@@ -36,7 +36,7 @@ router.get('/purchases', verify, async(req, res) => {
         }
     });
 
-    if (user.count != 1){
+    if (user == null){
         res.status(404);
     }
 
