@@ -9,14 +9,68 @@ const verify = require('./verifyToken');
  * list all users
 */
 
-router.get('/users', verify, async(req, res, next) => {
+router.post('/users', verify, async(req, res, next) => {
     var users = User.findAll();
     res.status(200).json(users);
 });
 
+router.get('/user/:id', verify, async(req, res) => {
+    offer = await User.findOne({
+        where: {
+            id: req.params.id
+        }
+    })
+    .then(offer =>{
+        if(offer){
+    // found offer
+            res.status(200).send(offer);
+        }else{
+            res.status(404); // not found
+        }
+    })
+    .catch(err => (res.status(400).send(err)));    
+});
 
-/**
- * change account settings
+router.post('/user/:id', verify, async(req, res) => {
+    offer = await User.update({
+        name: req.body.name,
+        email: req.body.email,
+        password: req.body.password;
+    },{
+        where: {
+            id: req.params.id
+        }
+    }
+    })
+    .then(offer =>{
+        if(offer){
+    // found offer
+            res.status(200).send(offer);
+        }else{
+            res.status(404); // not found
+        }
+    })
+    .catch(err => (res.status(400).send(err)));    
+});
+
+router.delete('/user/:id', verify, async(req, res) => {
+    offer = await Offer.destroy({
+        where: {
+            id: req.params.id
+        }
+    })
+    .then(offer =>{
+        if(offer){
+    // found offer
+            res.status(200).send(offer);
+        }else{
+            res.status(404); // not found
+        }
+    })
+    .catch(err => (res.status(400).send(err)));    
+});
+                                                    /**
+                                                     * change account settings
  */
 router.post('/account/change', verify, async(req, res) =>{
     var user = User.findOne({
