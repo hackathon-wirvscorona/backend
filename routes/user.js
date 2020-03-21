@@ -1,11 +1,12 @@
 const router = require('express').Router();
 const User = require('../models/User');
 var sequelize = require('sequelize');
+const verify = require('./verifyToken');
 
 /**
  * change account settings
  */
-router.post('/account/change', async(req, res) =>{
+router.post('/account/change', verify, async(req, res) =>{
     var user = User.findAll({
         where: {
             name = req.name
@@ -28,7 +29,7 @@ router.post('/account/change', async(req, res) =>{
 /**
  * list with all past purchase the user completed
  */
-router.get('/purchases', async(req, res) => {
+router.get('/purchases', verify, async(req, res) => {
     var user = User.findAll({
         where: {
             name = req.name
