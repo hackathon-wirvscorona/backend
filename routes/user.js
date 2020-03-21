@@ -5,7 +5,8 @@ var sequelize = require('sequelize');
 const verify = require('./verifyToken');
 
 
-/** list all users
+/** 
+ * list all users
 */
 
 router.post('/users', verify, async(req, res, next) => {
@@ -18,18 +19,18 @@ router.post('/users', verify, async(req, res, next) => {
  * change account settings
  */
 router.post('/account/change', verify, async(req, res) =>{
-    var user = User.findAll({
+    var user = User.findOne({
         where: {
-            name: req.name
+            name: req.body.name
         }
     });
-    if (user.count != 1){
+    if (user == null){
         res.status(404);
     }
 
-    await User.update({email = req.email},  {
+    await User.update({email = req.body.email},  {
         where: {
-            name: req.name
+            name: req.body.name
         }
     })
 
@@ -43,7 +44,7 @@ router.post('/account/change', verify, async(req, res) =>{
  * list with all past purchase the user completed
  */
 router.get('/purchases', verify, async(req, res) => {
-    var userlist = User.findAll({
+    var user = User.findOne({
         where: {
             name: req.name
         }
@@ -52,8 +53,6 @@ router.get('/purchases', verify, async(req, res) => {
     if (user == null){
         res.status(404);
     }
-
-    var user = userlist[0];
     
     var giftcards = GiftCard.findAll({
         where:{
