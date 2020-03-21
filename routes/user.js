@@ -8,11 +8,12 @@ const verify = require('./verifyToken');
 */
 
 router.post('/users', verify, async(req, res) => {
-    verify.auth(req, res, function(req, res){
+    verify(req, res, function(req, res){
         var users = User.findAll();
         res.status(200).json(users);
     });
 });
+
 
 /**
  * change account settings
@@ -36,6 +37,8 @@ router.post('/account/change', verify, async(req, res) =>{
     res.status(200).send("Account was successfully updated.");
 
 });
+
+
 
 /**
  * list with all past purchase the user completed
