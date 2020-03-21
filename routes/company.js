@@ -27,6 +27,10 @@ router.get('/searchDistance', async(req, res) => {
 
 });
 
+/**
+ * returns companies with a similar name
+ */
+
 router.get('/searchName', async(req, res) => {
     var content = req.content;
     var companies = await Company.findAll();
