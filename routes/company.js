@@ -3,6 +3,8 @@ const router = require('express').router();
 const sequalize = require('sequelize');
 const Company = require('../models.Company');
 var fuzzy = require('fuzzyset.js');
+const verify = require('./verifyToken');
+const User = require('../models/User');
 
 /**
  * returns all companies near the user
@@ -50,6 +52,17 @@ router.get('/searchName', async(req, res) => {
     
 
     res.status(200).send(JSON.stringify(result));
+});
+
+router.get('/offers', verify, async(req, res) => {
+    var user = await User.findAll({
+        where: {
+            name = req.name
+        }
+    });
+
+    var list = user.getOffers();
+    res.status(200).send(JSON.stringify(list));
 });
 
 module.exports(router);
