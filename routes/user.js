@@ -6,7 +6,7 @@ const verify = require('./verifyToken');
 
 
 /** 
- * list all users
+ * Returns all users
 */
 
 router.get('/users', verify, async(req, res, next) => {
@@ -14,14 +14,32 @@ router.get('/users', verify, async(req, res, next) => {
     res.status(200).json(users);
 });
 
+/**
+ * Returns all information about a user
+*/
+router.get('/:id', vertify, async(req, res) => {
+    var user_id = req.params.id;
+    var user = await User.findOne({
+        where: {
+            id : user_id
+        }
+    });
+    if (user == null){
+        res.status(404);
+    }
+
+    res.status(200).send(JSON.stringify(user));
+})
+
 
 /**
- * change account settings
+ * Change User Information
  */
-router.post('/account/change', verify, async(req, res) =>{
-    var user = User.findOne({
+router.post('/:id', verify, async(req, res) =>{
+    var user_id = req.params.id;
+    var user = await User.findOne({
         where: {
-            name: req.body.name
+            id: user_id
         }
     });
     if (user == null){
@@ -30,12 +48,29 @@ router.post('/account/change', verify, async(req, res) =>{
 
     await User.update({email: req.body.email},  {
         where: {
-            name: req.body.name
+            id: user_id
         }
-    })
+    });
 
     res.status(200).send("Account was successfully updated.");
 
+});
+
+/**
+ * Deletes a User
+ */
+router.delete('/:id', verify, async(req, res) => {
+    var user_id = req.params.id;
+
+    await User.destroy({
+        where: {
+            id: user_id
+        }
+    }).then(function(userDeleted){
+            res.status(200)
+    }).catch(function(err){
+            res.status(400)
+    });
 });
 
 
