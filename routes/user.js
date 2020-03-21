@@ -59,7 +59,7 @@ router.get('/purchases', verify, async(req, res) => {
             userFk: user.id
         }
     });
-    res.status(200).json(giftcards);
+    res.status(200).send(JSON.stringify(giftcards));
 });
 
 module.exports = router;
