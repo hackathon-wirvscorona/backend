@@ -31,6 +31,6 @@ const Company  = db.define('company', {
 })
 
 
-Company.hasMany(Giftcard, {foreignKey: 'companyFk', targetKey:'id'});
-module.exports = company;
+//Company.hasMany(Giftcard, {foreignKey: 'companyFk', targetKey:'id'});
+module.exports = Company;
 
