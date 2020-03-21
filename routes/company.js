@@ -58,7 +58,7 @@ router.get('/searchName', async(req, res) => {
 router.get('/offers', verify, async(req, res) => {
     var user = await User.findAll({
         where: {
-            name: req.name
+            name: req.body.name
         }
     });
 
@@ -66,12 +66,12 @@ router.get('/offers', verify, async(req, res) => {
     res.status(200).send(JSON.stringify(list));
 });
 
-router.get('/createOffer', verify, async(req, res) => {
+router.post('/createOffer', verify, async(req, res) => {
     offer = await Offer.create({
         name: req.body.name,
         description: req.body.description,
         min_value: req.body.min_value,
-        max_value: req.body.max_value
+        max_value: req.body.max_value,
         companyFk: req.user
     }).catch(err => (res.status(400).send(err)));    
 
