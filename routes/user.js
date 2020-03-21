@@ -9,7 +9,7 @@ const verify = require('./verifyToken');
 router.post('/account/change', verify, async(req, res) =>{
     var user = User.findAll({
         where: {
-            name = req.name
+            name: req.name
         }
     });
     if (user.count != 1){
@@ -18,7 +18,7 @@ router.post('/account/change', verify, async(req, res) =>{
 
     await User.update({email = req.email},  {
         where: {
-            name = req.name
+            name: req.name
         }
     })
 
@@ -32,7 +32,7 @@ router.post('/account/change', verify, async(req, res) =>{
 router.get('/purchases', verify, async(req, res) => {
     var user = User.findAll({
         where: {
-            name = req.name
+            name: req.name
         }
     });
 
