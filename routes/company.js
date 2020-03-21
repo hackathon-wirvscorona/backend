@@ -5,6 +5,7 @@ const Company = require('../models/Company');
 var fuzzy = require('fuzzyset.js');
 const verify = require('./verifyToken');
 const User = require('../models/User');
+const Offer = require('../models/Offer');
 
 /**
  * returns all companies near the user
@@ -63,6 +64,18 @@ router.get('/offers', verify, async(req, res) => {
 
     var list = user.getOffers();
     res.status(200).send(JSON.stringify(list));
+});
+
+router.get('/createOffer', verify, async(req, res) => {
+    offer = await Offer.create({
+        name: req.body.name,
+        description: req.body.description,
+        min_value: req.body.min_value,
+        max_value: req.body.max_value
+        companyFk: req.user
+    }).catch(err => (res.status(400).send(err)));    
+
+    res.status(200).json(offer);
 });
 
 module.exports = router;
