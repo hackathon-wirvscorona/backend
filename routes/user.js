@@ -61,3 +61,5 @@ router.get('/purchases', verify, async(req, res) => {
     });
     res.status(200).json(giftcards);
 });
+
+module.exports = router;
