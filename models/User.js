@@ -23,4 +23,5 @@ const User = db.define('user', {
     },
 })
 
+User.hasMany(Giftcard, {foreignKey: 'userFk', targetKey:'id'});
 module.exports = User;
