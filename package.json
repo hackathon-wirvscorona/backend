@@ -18,8 +18,12 @@
   },
   "homepage": "https://github.com/hackathon-wirvscorona/backend#readme",
   "dependencies": {
+    "@hapi/joi": "^17.1.1",
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "fuzzyset.js": "0.0.91",
+    "jsonwebtoken": "^8.5.1",
     "mariadb": "^2.3.1",
     "nodemon": "^2.0.2",
     "sequelize": "^5.21.5"

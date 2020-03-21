@@ -1,6 +1,7 @@
 const router = require('express').Router();
+const verify = require('./verifyToken');
 
-router.get('/', async(req,res) => {
+router.get('/', verify, async(req,res) => {
     //DO SOMETHING HERE
 
 
