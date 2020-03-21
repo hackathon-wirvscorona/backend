@@ -7,6 +7,9 @@ const verify = require('./verifyToken');
 const User = require('../models/User');
 const Offer = require('../models/Offer');
 
+
+
+
 /**
  * returns all companies near the user
  */
@@ -58,7 +61,7 @@ router.get('/searchName', async(req, res) => {
 router.get('/offers', verify, async(req, res) => {
     var user = await User.findAll({
         where: {
-            name: req.body.name
+            name: req.name
         }
     });
 
