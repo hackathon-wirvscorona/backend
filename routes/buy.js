@@ -11,13 +11,13 @@ const Offer = require('../models/Offer');
 router.post('/', verify, async(req, res) => {
     var user = await User.findAll({
         where: {
-            name = req.body.user_name
+            name: req.body.user_name
         }
     });
 
     var offer = await Offer.findAll({
         where: {
-            id = req.body.offer_id
+            id: req.body.offer_id
         }
     });
     
@@ -31,17 +31,17 @@ router.post('/', verify, async(req, res) => {
 
     await Offer.update({ count =  count - 1}, {
         where: {
-            id = offer.id
+            id: offer.id
         }
     });
     
     var gift = await GiftCard.create({
-        companyFk = offer.company.id,
-        userFk = user.id,
-        name = offer.name,
-        price = offer.price,
-        expirydate = offer.expirydate,
-        purchaseDay = Date.now()
+        companyFk: offer.company.id,
+        userFk: user.id,
+        name: offer.name,
+        price: offer.price,
+        expirydate: offer.expirydate,
+        purchaseDay: Date.now()
     });
 
     
