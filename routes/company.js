@@ -57,7 +57,7 @@ router.get('/searchName', async(req, res) => {
 router.get('/offers', verify, async(req, res) => {
     var user = await User.findAll({
         where: {
-            name = req.name
+            name: req.name
         }
     });
 
