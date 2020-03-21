@@ -1,5 +1,7 @@
 const Sequelize = require('sequelize');
 const db = require('../config/database');
+const Company = require('./Company');
+
 /**
  * gift card sample a company can offer.
  */
@@ -34,5 +36,7 @@ const Offer = db.define('offer',{
     }
 
 });
+
+Offer.belongsTo(Company, {foreignKey: 'offerFk', targetKey:'id'})
 
 module.exports = Offer;
