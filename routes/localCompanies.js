@@ -1,6 +1,10 @@
+/**
+ * returns all companies near the user
+ */
+
 const router = require('express').router();
 const sequalize = require('sequelize');
-const Company = require('../models.Company')
+const Company = require('../models.Company');
 
 router.get('/', async(req, res) => {
     var companieslist = await Company.findAll();
