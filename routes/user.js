@@ -45,11 +45,11 @@ router.post('/account/change', verify, async(req, res) =>{
 router.get('/purchases', verify, async(req, res) => {
     var userlist = User.findAll({
         where: {
-            name: req.name
+            name: req.query.name
         }
     });
 
-    if (user.count != 1){
+    if (userlist.count != 1){
         res.status(404);
     }
 
