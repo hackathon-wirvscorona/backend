@@ -11,7 +11,7 @@ const Company  = db.define('company', {
         max: 255,
     },
 
-    adress: {
+    address: {
         type: Sequelize.STRING,
         require: true,
         min: 6,
@@ -22,7 +22,7 @@ const Company  = db.define('company', {
         type: Sequelize.DOUBLE,
         require: true,
     },
-        
+
     latitude: {
         type: Sequelize.DOUBLE,
         require: true,
