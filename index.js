@@ -1,5 +1,13 @@
 const express = require('express');
 const app = express();
+const dotenv = require('dotenv').config()
+
+const db = require('./config/database'); 
+
+//Test DB
+db.authenticate()
+    .then(() => console.log('Databsase connected'))
+    .catch(err => console.log('Error: ' + err))
 
 //IMPORT ROUTES
 const authRoute = require('./routes/auth');
