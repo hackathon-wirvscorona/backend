@@ -13,22 +13,12 @@ const Company  = db.define('company', {
         max: 255,
     },
 
-    address: {
+    branche: {
         type: Sequelize.STRING,
         require: true,
-        min: 6,
-        max: 255,
-    },
-
-    longitude: {
-        type: Sequelize.DOUBLE,
-        require: true,
-    },
-
-    latitude: {
-        type: Sequelize.DOUBLE,
-        require: true,
-    },
+        min: 3,
+        max: 100
+    }
 
 })
 
