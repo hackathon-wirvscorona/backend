@@ -7,6 +7,9 @@ const verify = require('./verifyToken');
 const User = require('../models/User');
 const Offer = require('../models/Offer');
 
+
+
+
 /**
  * returns all companies near the user
  */
