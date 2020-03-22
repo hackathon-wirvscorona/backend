@@ -3,7 +3,7 @@ const db = require('../config/database');
 const Customer = require('../models/Customer');
 const Company = require('../models/Company');
 
-const Address  = db.define('adress', {
+const Address  = db.define('address', {
     housenumber: {
         type: Sequelize.STRING,
         require: true,
@@ -44,8 +44,8 @@ const Address  = db.define('adress', {
 
 })
 
-Address.hasMany(Customer, {as: 'Customers',foreignKey: 'adressFk', targetKey:'id'});
-Address.hasMany(Company, {as: 'Companies' , foreignKey: 'adressFk', targetKey:'id'});
+Address.hasMany(Customer, {as: 'Customers',foreignKey: 'addressFk', targetKey:'id'});
+Address.hasMany(Company, {as: 'Companies' , foreignKey: 'addressFk', targetKey:'id'});
 
 module.exports = Address;
 

@@ -18,7 +18,20 @@ const registerValidationCustomer = data => {
         name: Joi.string().min(6).required(),
         email: Joi.string().min(6).required().email(),
         password: Joi.string().min(6).required(),
-        adress: adressSchema
+        address: adressSchema
+    });
+    const validation = schema.validate(data);
+    return validation;
+}
+
+const registerValidationCompany = data => {
+    const schema = Joi.object({
+        name: Joi.string().min(6).required(),
+        email: Joi.string().min(6).required().email(),
+        password: Joi.string().min(6).required(),
+        description: Joi.string(),
+        branche: Joi.string(),
+        address: adressSchema
     });
     const validation = schema.validate(data);
     return validation;
@@ -49,3 +62,4 @@ const loginValidation = data => {
 module.exports.registerValidation = registerValidation;
 module.exports.loginValidation = loginValidation;
 module.exports.registerValidationCustomer = registerValidationCustomer;
+module.exports.registerValidationCompany = registerValidationCompany;
