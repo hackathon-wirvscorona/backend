@@ -28,7 +28,7 @@ router.post('/account/change', verify, async(req, res) =>{
         res.status(404);
     }
 
-    await User.update({email = req.body.email},  {
+    await User.update({email : req.body.email},  {
         where: {
             name: req.body.name
         }
