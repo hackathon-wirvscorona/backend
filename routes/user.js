@@ -17,7 +17,7 @@ router.get('/users', verify, async(req, res, next) => {
 /**
  * Returns all information about a user
 */
-router.get('/:id', vertify, async(req, res) => {
+router.get('/:id', verify, async(req, res) => {
     var user_id = req.params.id;
     var user = await User.findOne({
         where: {
@@ -74,27 +74,5 @@ router.delete('/:id', verify, async(req, res) => {
 });
 
 
-
-/**
- * list with all past purchase the user completed
- */
-router.get('/purchases', verify, async(req, res) => {
-    var user = User.findOne({
-        where: {
-            name: req.name
-        }
-    });
-
-    if (user == null){
-        res.status(404);
-    }
-    
-    var giftcards = GiftCard.findAll({
-        where:{
-            userFk: user.id
-        }
-    });
-    res.status(200).send(JSON.stringify(giftcards));
-});
 
 module.exports = router;
