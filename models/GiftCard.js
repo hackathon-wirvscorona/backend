@@ -1,6 +1,9 @@
 const Sequelize = require('sequelize');
 const db = require('../config/database');
 
+/**
+ * created when a user purchases a offer
+ */
 const GiftCard = db.define('giftcard', {
     name: {
         type: Sequelize.STRING,
@@ -17,15 +20,15 @@ const GiftCard = db.define('giftcard', {
         max: 1024,
     },
 
-    count: {
-        type: Sequelize.INTEGER,
-        require: true,
-    },
-
     expirydate: {
         type: Sequelize.DATE,
         require: true,
     },
+
+    puchase_day: {
+        type: Sequelize.DATE,
+        require: true
+    }
 })
 
 

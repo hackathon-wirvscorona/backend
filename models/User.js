@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize');
 const db = require('../config/database');
-const GiftCard = require('./GiftCard')
+const GiftCard = require('./GiftCard');
+const Offer = require('./Offer');
 
 const User = db.define('user', {
     name: {
@@ -24,5 +25,8 @@ const User = db.define('user', {
     },
 })
 
-User.hasMany(GiftCard, {foreignKey: 'userFk', targetKey:'id'});
+User.hasMany(GiftCard, {as: 'GiftCards', foreignKey: 'userFk', targetKey: 'id'});
+//User.hasMany(Offer, {foreignKey: 'userFk', targetKey: 'id'});
+
+
 module.exports = User;
