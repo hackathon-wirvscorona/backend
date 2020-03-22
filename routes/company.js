@@ -65,7 +65,8 @@ router.post('/create', async(req, res) => {
                 name: req.body.name,
                 description: req.body.description,
                 authorizationFk: auth.id,
-                addressFk: address.id
+                addressFk: address.id,
+                image: req.body.image,
             })
             .catch(err => {res.status(500).send(err)})
             .then(company => {res.status(200).send(company)});
