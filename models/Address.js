@@ -7,26 +7,28 @@ const Address  = db.define('company', {
     housenumber: {
         type: Sequelize.STRING,
         require: true,
-        min: 0,
+        min: 1,
         max: 255,
     },
 
     street: {
         type: Sequelize.STRING,
         require: true,
-        min: 0,
+        min: 1,
         max: 255,
     },
 
     postcode: {
         type: Sequelize.STRING,
         require: true,
+        min: 1,
+        max: 255
     },
 
     city: {
         type: Sequelize.STRING,
         require: true,
-        min: 0,
+        min: 1,
         max: 255,
     },
 
