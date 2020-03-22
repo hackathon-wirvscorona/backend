@@ -17,6 +17,8 @@ const giftCardRoute = require('./routes/giftcard');
 const companyRoute = require('./routes/company');
 const customerRoute = require('./routes/customer');
 const offerRoute = require('./routes/offer');
+const uploadRoute = require('./routes/upload');
+
 
 //MIDDLEWARE
 app.use(express.json());
@@ -28,6 +30,8 @@ app.use('/api/giftcard', giftCardRoute);
 app.use('/api/company', companyRoute);
 app.use('/api/customer', customerRoute);
 app.use('/api/offer', offerRoute);
+app.use('/api/upload', uploadRoute);
+
 
 
 

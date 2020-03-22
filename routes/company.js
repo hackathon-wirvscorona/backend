@@ -14,9 +14,13 @@ router.get('/searchDistance', async(req, res) => {
     var companiesNearby = [];
     var maxDistance = 10;
     
-    companieslist.array.forEach(element => {
-        var dx = 71.3 * (longPos - element.longitude);
-        var dy = 111.3 * (latPos - element.latitude);
+    companieslist.forEach(element => {
+        var address = element.getAddress();
+        var address = element.getAdress();
+        longitude = address.longitude;
+        latitude = address.latitude;
+        var dx = 71.3 * (longPos - longitude);
+        var dy = 111.3 * (latPos - latitude);
         var distance = Math.sqrt(dx * dx + dy * dy);
         if (distance < maxDistance){
             companiesNearby.push(element);
@@ -99,8 +103,7 @@ router.post('/:id', verify, async(req, res) => {
     {
         name: req.body.name,
         address: req.body.address,
-        longitude: req.body.longitude,
-        latitude: req.body.latitude,
+        description: req.body.description
     }, {
         where: {
             id: req.params.id
@@ -134,6 +137,21 @@ router.delete('/:id', verify, async(req, res) => {
     })
     .catch(err => (res.status(400).send(err)));    
 
+});
+
+// FIXME: this only gives 400 
+router.post('/createOffer', verify, async(req, res) => {
+    Offer.create(
+    {
+        name: req.body.name,
+        description: req.body.description,
+        min_value: req.body.min_value,
+        max_value: req.body.max_value,
+        companyFk: req.user,
+        image: req.body.image
+    })
+    .then(offer =>(res.status(200).send(offer)))
+    .catch(err => (res.status(400).send(err)));    
 });
 
 module.exports = router;
