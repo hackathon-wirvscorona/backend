@@ -1,10 +1,10 @@
-
 'use strict'
 const express = require('express')
 const multer = require('multer')
 const fileType = require('file-type')
 const fs = require('fs')
 const router = express.Router()
+const verify = require('./verifyToken');
 
 const upload = multer({
     dest:'images/', 
@@ -20,7 +20,10 @@ const upload = multer({
     }
 }).single('image')
 
-router.post('/images', (req, res) => {
+/**
+ * Upload a new jpeg/jpg image
+ */
+router.post('/images', verify, (req, res) => {
 
     upload(req, res, function (err) {
 
@@ -36,6 +39,9 @@ router.post('/images', (req, res) => {
     })
 })
 
+/**
+ * Get image
+ */
 router.get('/images/:imagename', (req, res) => {
 
     let imagename = req.params.imagename
