@@ -105,8 +105,7 @@ router.post('/:id', verify, async(req, res) => {
     {
         name: req.body.name,
         address: req.body.address,
-        longitude: req.body.longitude,
-        latitude: req.body.latitude,
+        description: req.body.description
     }, {
         where: {
             id: req.params.id
