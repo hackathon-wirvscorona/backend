@@ -58,6 +58,67 @@ router.get('/searchName', async(req, res) => {
     res.status(200).send(JSON.stringify(result));
 });
 
+router.get('/:id', verify, async(req, res) => {
+    company = await Company.findOne({
+        where: {
+            id: req.params.id
+        }
+    })
+    .then(company =>{
+        if(company){
+            // found offer
+            res.status(200).send(company);
+        }else{
+            res.status(404); // not found
+        }
+    })
+    .catch(err => (res.status(400).send(err)));    
+});
+
+
+router.post('/:id', verify, async(req, res) => {
+    company = await Company.update(
+    {
+        name: req.body.name,
+        address: req.body.address,
+        longitude: req.body.longitude,
+        latitude: req.body.latitude,
+    }, {
+        where: {
+            id: req.params.id
+        }
+    })
+    .then(company => {
+        if(company){
+            // found offer
+            res.status(200).send(company);
+        }else{
+            res.status(404); // not found
+        }
+    })
+    .catch(err => (res.status(400).send(err)));    
+
+});
+
+router.delete('/:id', verify, async(req, res) => {
+    company = await Company.destroy({
+        where: {
+            id: req.params.id
+        }
+    })
+    .then(company =>{
+        if(company){
+            // found offer
+            res.status(200).send(company);
+        }else{
+            res.status(404); // not found
+        }
+    })
+    .catch(err => (res.status(400).send(err)));    
+
+});
+
+
 // TODO: Implement as stated in
 router.get('/offers', verify, async(req, res) => {
     var list = Offer.findAll();
@@ -143,8 +204,6 @@ router.delete('/offer/:id', verify, async(req, res) => {
         }
     })
     .catch(err => (res.status(400).send(err)));    
-
-    res.status(200).json(offer);
 });
 
 module.exports = router;
