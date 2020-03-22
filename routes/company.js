@@ -18,6 +18,7 @@ router.get('/searchDistance', async(req, res) => {
     var maxDistance = 10;
     
     companieslist.forEach(element => {
+        var address = element.getAddress();
         var address = element.getAdress();
         longitude = address.longitude;
         latitude = address.latitude;
