@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const Customer = require('../models/Customer');
+const Company = require('../models/Company');
 const Adress = require('../models/Address');
 const verify = require('./verifyToken');
 const {registerValidationCustomer} = require('../validation');
@@ -24,19 +25,25 @@ router.post('/create', async(req, res) => {
     if(validation.error) {
        return res.status(400).send(validation.error);
     }
-    console.log(req.body.password);
+
+    //Checking if the user is already in the database
+    let emailExist = await Customer.findOne({where: {email: req.body.email}})
+    if(emailExist) return res.status(400).send({err: 'Email already exists'});
+    //Checking if the user is already in the database
+    emailExist = await Company.findOne({where: {email: req.body.email}})
+    if(emailExist) return res.status(400).send({err: 'Email already exists'});
+
     register(req.body.password)
     .catch(err => {res.status(500).send(err)})
-    .then(auth => {
-        console.log(auth);
+    .then(auth => {        
         Adress.create(req.body.adress)
         .catch(err => {res.status(500).send(err)})
-        .then(adress => {
+        .then(address => {
             Customer.create({
                 email: req.body.email,
                 name: req.body.name,
                 authorizationFk: auth.id,
-                adressFk: adress.id
+                addressFk: address.id
             })
             .catch(err => {res.status(500).send(err)})
             .then(customer => {res.status(200).send(customer)});

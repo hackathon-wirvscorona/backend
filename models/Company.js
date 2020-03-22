@@ -20,9 +20,23 @@ const Company  = db.define('company', {
         max: 100
     },
 
-    description: {
+    email: {
         type: Sequelize.STRING,
         require: true,
+        min: 3,
+        max: 100
+    },
+
+    branche: {
+        type: Sequelize.STRING,
+        require: false,
+        min: 3,
+        max: 100
+    },
+
+    description: {
+        type: Sequelize.STRING,
+        require: false,
         min: 0,
         max: 10000
     }

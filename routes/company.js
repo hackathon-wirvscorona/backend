@@ -1,8 +1,12 @@
 
 const router = require('express').Router();
 const Company = require('../models/Company');
+const Customer = require('../models/Customer');
+const Address = require('../models/Address');
 var fuzzy = require('fuzzyset.js');
-const verify = require('./verifyToken');;
+const verify = require('./verifyToken');
+const {registerValidationCompany} = require('../validation');
+var {register} = require('./auth');
 
 /**
  * returns all companies near the user
@@ -34,6 +38,40 @@ router.get('/searchDistance', async(req, res) => {
 /**
  * Get Companies (with Filter)
  */
+
+
+router.post('/create', async(req, res) => {
+    const validation = registerValidationCompany(req.body);
+    if(validation.error) {
+       return res.status(400).send(validation.error);
+    }
+    
+    //Checking if the user is already in the database
+    let emailExist = await Customer.findOne({where: {email: req.body.email}})
+    if(emailExist) return res.status(400).send({err: 'Email already exists'});
+    //Checking if the user is already in the database
+    emailExist = await Company.findOne({where: {email: req.body.email}})
+    if(emailExist) return res.status(400).send({err: 'Email already exists'});
+
+    register(req.body.password)
+    .catch(err => {res.status(500).send(err)})
+    .then(auth => {        
+        Address.create(req.body.address)
+        .catch(err => {res.status(500).send(err)})
+        .then(address => {
+            console.log(address);
+            Company.create({
+                email: req.body.email,
+                name: req.body.name,
+                description: req.body.description,
+                authorizationFk: auth.id,
+                addressFk: address.id
+            })
+            .catch(err => {res.status(500).send(err)})
+            .then(company => {res.status(200).send(company)});
+        })
+    });
+});
 
 router.get('/companies', async(req, res) => {
     var name = req.name;
@@ -137,21 +175,6 @@ router.delete('/:id', verify, async(req, res) => {
     })
     .catch(err => (res.status(400).send(err)));    
 
-});
-
-// FIXME: this only gives 400 
-router.post('/createOffer', verify, async(req, res) => {
-    Offer.create(
-    {
-        name: req.body.name,
-        description: req.body.description,
-        min_value: req.body.min_value,
-        max_value: req.body.max_value,
-        companyFk: req.user,
-        image: req.body.image
-    })
-    .then(offer =>(res.status(200).send(offer)))
-    .catch(err => (res.status(400).send(err)));    
 });
 
 module.exports = router;
