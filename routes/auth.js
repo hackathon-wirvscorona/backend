@@ -42,6 +42,7 @@ router.post('/login', async (req,res) => {
 
         res.header('auth-token', token);
         res.status(200).send('{"token": "'+ token + '", "expiresIn": 3600}');
+        return;
     }
     const customer = await Customer.findOne({where: {email: req.body.email}})
     if(customer) {
@@ -57,6 +58,7 @@ router.post('/login', async (req,res) => {
 
         res.header('auth-token', token);
         res.status(200).send('{"token": "'+ token + '", "expiresIn": 3600}');
+        return;
     }
     return res.status(401).send('{"error" : "Email or Password is wrong"}');
 })
