@@ -1,14 +1,11 @@
 
 const router = require('express').Router();
-const sequalize = require('sequelize');
+const sequelize = require('sequelize');
 const Company = require('../models/Company');
 var fuzzy = require('fuzzyset.js');
 const verify = require('./verifyToken');
 const User = require('../models/User');
 const Offer = require('../models/Offer');
-
-
-
 
 /**
  * returns all companies near the user
@@ -34,36 +31,59 @@ router.get('/searchDistance', async(req, res) => {
 });
 
 /**
- * returns companies with a similar name
+ * Get Companies (with Filter)
  */
 
-router.get('/searchName', async(req, res) => {
-    var content = req.content;
-    var companies = await Company.findAll();
-    var companyNames = [];
-    var companyDict;
-    companies.array.forEach(element => {
-        companyNames.push(element.name);
-        companyDict[element.name] = element;
-    });
+router.get('/companies', async(req, res) => {
+    var name = req.name;
+    var companies;
+    if (req.branch == null && req.name == null){
+        res.status(400)
+    } else if (req.branch != null && req.name == null){
+        companies = await Company.findAll({
+            where: {
+                branch: req.branch
+            }
+        })
 
-    var a = FuzzySet(companyNames);
-
-    var result;
-    var fuzzy = a.get(content).forEach(element => {
-        result = companyDict[element];
-    });
+        res.status(200).send(JSON.stringify(companies))
+    } else {
+        if (req.branch != null){
+            companies = await Company.findAll({
+                where: {
+                    branch: req.branch
+                }
+            })
+        } else {
+            companies = await Company.findAll()
+        }
+        if (companies.count == 0){
+            res.send(404)
+        }
+        var companyNames = [];
+        var companyDict;
+        companies.forEach(element => {
+            companyNames.push(element.name);
+            companyDict[element.name] = element;
+        });
     
-
-    res.status(200).send(JSON.stringify(result));
+        var a = FuzzySet(companyNames);
+    
+        var result;
+        a.get(name).forEach(element => {
+            result.push(companyDict[element]);
+        });
+    
+        res.status(200).send(JSON.stringify(result));
+    }
+        
 });
 
-// TODO: Implement as stated in
 router.get('/offers', verify, async(req, res) => {
     var list = Offer.findAll();
     var user = await User.findAll({
         where: {
-            name: req.name
+            name: req.body.name
         }
     });
 
