@@ -172,7 +172,7 @@ router.get('/offers', verify, async(req, res) => {
         })
         var list = [];
         companies.forEach(element => {
-            var newlist = await company.getOffers({
+            var newlist = company.getOffers({
                 where: {
                     name: req.body.name,
                     max_value : req.max_value,
