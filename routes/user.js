@@ -10,7 +10,7 @@ const verify = require('./verifyToken');
 */
 
 router.get('/users', verify, async(req, res, next) => {
-    var users = User.findAll();
+    var users = await User.findAll();
     res.status(200).json(users);
 });
 
