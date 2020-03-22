@@ -101,9 +101,7 @@ router.post('/:id', verify, async(req, res) => {
     company = await Company.update(
     {
         name: req.body.name,
-        address: req.body.address,
-        longitude: req.body.longitude,
-        latitude: req.body.latitude,
+        address: req.body.address
     }, {
         where: {
             id: req.params.id
@@ -193,7 +191,8 @@ router.post('/createOffer', verify, async(req, res) => {
         description: req.body.description,
         min_value: req.body.min_value,
         max_value: req.body.max_value,
-        companyFk: req.user
+        companyFk: req.user,
+        image: req.body.image
     })
     .then(offer =>(res.status(200).send(offer)))
     .catch(err => (res.status(400).send(err)));    
@@ -224,7 +223,8 @@ router.post('/offer/:id', verify, async(req, res) => {
         description: req.body.description,
         min_value: req.body.min_value,
         max_value: req.body.max_value,
-        companyFk: req.user
+        companyFk: req.user,
+        image: req.body.image
     }, {
         where: {
             id: req.params.id

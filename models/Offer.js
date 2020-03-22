@@ -28,6 +28,12 @@ const Offer = db.define('offer',{
         require: true,
         min: 0,
         max: 500
+    }, 
+    image:{
+        type: Sequelize.STRING,
+        require: true,
+        min: 0,
+        max: 200
     }
 });
 
