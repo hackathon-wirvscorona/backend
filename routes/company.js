@@ -79,16 +79,48 @@ router.get('/companies', async(req, res) => {
         
 });
 
-router.get('/offers', verify, async(req, res) => {
-    var list = Offer.findAll();
-    var user = await User.findAll({
-        where: {
-            name: req.body.name
+router.get('/offers', async(req, res) => {
+    if (req.company_id != null){
+        var company = await Company.findOne({
+            where: {
+                id : req.company_id,
+                branche: req.branch
+            }
+        })
+        if (company == null){
+            res.send(404)
         }
-    });
 
-    var list = user.getOffers();
-    res.status(200).send(JSON.stringify(list));
+        var list = company.getOffers({
+            where: {
+                name: req.name,
+                max_value : req.max_value,
+                min_value : req.min_value
+            }
+        })
+
+        res.status(200).send(JSON.stringify(list))
+    } else {
+        var companies = await Company.findAll({
+            where: {
+                branche: req.branch
+            }
+        })
+        var list = [];
+        companies.forEach(element => {
+            var newlist = await company.getOffers({
+                where: {
+                    name: req.body.name,
+                    max_value : req.max_value,
+                    min_value : req.min_value
+                }
+        });
+            list.concat(newlist)
+        })
+
+        res.status(200).send(list)
+
+    }
 });
 
 // FIXME: this only gives 400 
