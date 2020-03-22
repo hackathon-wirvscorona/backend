@@ -9,8 +9,8 @@ const verify = require('./verifyToken');
  * Returns all users
 */
 
-router.post('/users', verify, async(req, res, next) => {
-    var users = User.findAll();
+router.get('/users', verify, async(req, res, next) => {
+    var users = await User.findAll();
     res.status(200).json(users);
 });
 
