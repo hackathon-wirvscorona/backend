@@ -18,7 +18,7 @@ router.get('/searchDistance', async(req, res) => {
     var maxDistance = 10;
     
     companieslist.forEach(element => {
-        var address = await element.getAdress();
+        var address = element.getAdress();
         longitude = address.longitude;
         latitude = address.latitude;
         var dx = 71.3 * (longPos - longitude);
@@ -172,7 +172,7 @@ router.get('/offers', verify, async(req, res) => {
         })
         var list = [];
         companies.forEach(element => {
-            var newlist = await company.getOffers({
+            var newlist = company.getOffers({
                 where: {
                     name: req.body.name,
                     max_value : req.max_value,
