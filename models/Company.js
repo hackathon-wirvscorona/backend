@@ -17,6 +17,13 @@ const Company  = db.define('company', {
         require: true,
         min: 3,
         max: 100
+    },
+
+    description: {
+        type: Sequelize.STRING,
+        require: true,
+        min: 0,
+        max: 10000
     }
 
 })
