@@ -196,7 +196,8 @@ router.post('/createOffer', verify, async(req, res) => {
         description: req.body.description,
         min_value: req.body.min_value,
         max_value: req.body.max_value,
-        companyFk: req.user
+        companyFk: req.user,
+        image: req.body.image
     })
     .then(offer =>(res.status(200).send(offer)))
     .catch(err => (res.status(400).send(err)));    
@@ -227,7 +228,8 @@ router.post('/offer/:id', verify, async(req, res) => {
         description: req.body.description,
         min_value: req.body.min_value,
         max_value: req.body.max_value,
-        companyFk: req.user
+        companyFk: req.user,
+        image: req.body.image
     }, {
         where: {
             id: req.params.id
