@@ -10,7 +10,7 @@ const verify = require('./verifyToken');
 */
 
 router.get('/users', verify, async(req, res, next) => {
-    var users = User.findAll();
+    var users = await User.findAll();
     res.status(200).json(users);
 });
 
@@ -67,9 +67,13 @@ router.delete('/:id', verify, async(req, res) => {
             id: user_id
         }
     }).then(function(userDeleted){
-            res.status(200)
+        if(userDeleted){
+            res.status(200).json("Sucessfully deleted User");
+        }else{
+            res.status(404).json("Not found");
+        }
     }).catch(function(err){
-            res.status(400)
+            res.status(500).json(err);
     });
 });
 

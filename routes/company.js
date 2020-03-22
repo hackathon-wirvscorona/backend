@@ -17,9 +17,12 @@ router.get('/searchDistance', async(req, res) => {
     var companiesNearby = [];
     var maxDistance = 10;
     
-    companieslist.array.forEach(element => {
-        var dx = 71.3 * (longPos - element.longitude);
-        var dy = 111.3 * (latPos - element.latitude);
+    companieslist.forEach(element => {
+        var address = element.getAdress();
+        longitude = address.longitude;
+        latitude = address.latitude;
+        var dx = 71.3 * (longPos - longitude);
+        var dy = 111.3 * (latPos - latitude);
         var distance = Math.sqrt(dx * dx + dy * dy);
         if (distance < maxDistance){
             companiesNearby.push(element);
@@ -101,7 +104,8 @@ router.post('/:id', verify, async(req, res) => {
     company = await Company.update(
     {
         name: req.body.name,
-        address: req.body.address
+        address: req.body.address,
+        description: req.body.description
     }, {
         where: {
             id: req.params.id
@@ -168,7 +172,7 @@ router.get('/offers', verify, async(req, res) => {
         })
         var list = [];
         companies.forEach(element => {
-            var newlist = await company.getOffers({
+            var newlist = company.getOffers({
                 where: {
                     name: req.body.name,
                     max_value : req.max_value,
