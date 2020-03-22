@@ -1,4 +1,4 @@
-const router = require('express').router();
+const router = require('express').Router();
 const sequalize = require('sequelize');
 const GiftCard = require('../models/GiftCard');
 
@@ -18,7 +18,7 @@ router.post('/delete', async(req, res) => {
 router.get('/info', async(req, res) => {
     var giftCard = await GiftCard.findAll({
         where: {
-            id = req.id
+            id: req.id
         }
     });
     
