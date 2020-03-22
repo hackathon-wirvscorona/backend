@@ -1,9 +1,9 @@
 const Sequelize = require('sequelize');
 const db = require('../config/database');
-const User = require('../models/User');
+const Customer = require('../models/Customer');
 const Company = require('../models/Company');
 
-const Address  = db.define('company', {
+const Address  = db.define('adress', {
     housenumber: {
         type: Sequelize.STRING,
         require: true,
@@ -42,8 +42,8 @@ const Address  = db.define('company', {
 
 })
 
-Company.hasMany(User, {as: 'Users',foreignKey: 'adressFk', targetKey:'id'});
-Company.hasMany(Company, {as: 'Companies' , foreignKey: 'adressFk', targetKey:'id'});
+Address.hasMany(Customer, {as: 'Customers',foreignKey: 'adressFk', targetKey:'id'});
+Address.hasMany(Company, {as: 'Companies' , foreignKey: 'adressFk', targetKey:'id'});
 
 module.exports = Address;
 

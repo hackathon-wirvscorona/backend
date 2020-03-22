@@ -2,6 +2,7 @@ const GiftCard = require('./GiftCard')
 const Sequelize = require('sequelize');
 const db = require('../config/database');
 const Offer = require('./Offer');
+const Authorization = require('./Authorization');
 
 const Company  = db.define('company', {
     name: {
@@ -35,8 +36,7 @@ const Company  = db.define('company', {
 
 Company.hasMany(GiftCard, {as: 'GiftCards',foreignKey: 'companyFk', targetKey:'id'});
 Company.hasMany(Offer, {as: 'Offers' , foreignKey: 'companyFk', targetKey:'id'});
-
-//Company.belongsToMany(Address, {foreignKey: 'companyFk', targetKey:'id'});
+Company.belongsTo(Authorization, {foreignKey: 'authorizationFk', targetKey: 'id'});
 
 module.exports = Company;
 

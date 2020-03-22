@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const dotenv = require('dotenv').config()
+const {registerValidationCustomer, loginValidation} = require('./validation');
 
 const db = require('./config/database'); 
 
@@ -14,8 +15,8 @@ const authRoute = require('./routes/auth');
 const testRoute = require('./routes/test');
 const giftCardRoute = require('./routes/giftcard');
 const companyRoute = require('./routes/company');
-const buyRoute = require('./routes/buy');
-const userRoute = require('./routes/user');
+const customerRoute = require('./routes/customer');
+const offerRoute = require('./routes/offer');
 
 //MIDDLEWARE
 app.use(express.json());
@@ -25,8 +26,8 @@ app.use('/api/test', testRoute);
 app.use('/api/auth', authRoute);
 app.use('/api/giftcard', giftCardRoute);
 app.use('/api/company', companyRoute);
-app.use('/api/buy', buyRoute);
-app.use('/api/user', userRoute);
+app.use('/api/customer', customerRoute);
+app.use('/api/offer', offerRoute);
 
 
 
