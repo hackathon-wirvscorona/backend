@@ -1,9 +1,10 @@
 const router = require('express').Router();
 const sequalize = require('sequelize');
 const GiftCard = require('../models/GiftCard');
+const verify = require('./verifyToken');
 
 
-router.delete('/:id', vertify,  async(req, res) => {
+router.delete('/:id', verify,  async(req, res) => {
     await GiftCard.destroy({
         where: {
             id: req.params.id
@@ -15,7 +16,7 @@ router.delete('/:id', vertify,  async(req, res) => {
     })
 });
 
-router.get('/:id', async(req, res) => {
+router.get('/:id', verify, async(req, res) => {
     var giftCard = await GiftCard.findAll({
         where: {
             id: req.params.id
